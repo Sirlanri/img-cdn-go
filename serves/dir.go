@@ -10,8 +10,8 @@ func main() {
 	DirInit()
 }
 
-/* DirInit 目录初始化
-如果不存在pics目录，创建pics目录*/
+/* DirInit 初始化文件夹
+如果不存在所需目录，创建该目录*/
 func DirInit() {
 
 	files, err := ioutil.ReadDir("./")
