@@ -9,22 +9,23 @@ import (
 )
 
 func main() {
+	app := iris.New()
 	//初始化文件夹
 	serves.DirInit()
-
-	app := iris.New()
 	app.OnErrorCode(iris.StatusNotFound, handlers.NotFound)
 	crs := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"}, //允许通过的主机名称
-		AllowCredentials: true,
+		AllowedHeaders:   []string{"accept", "content-type", "authorization"},
+		AllowCredentials: false,
 		Debug:            true,
 	})
 	app.WrapRouter(crs.ServeHTTP)
-	cdn := app.Party("/cdn")
+	img := app.Party("/img")
 
-	cdn.Post("/imgupload", handlers.ImgUpload)
+	img.Post("/upload", handlers.ImgUploadOSS)
+	img.Get("/del", handlers.DelImgOSS)
 
-	app.Run(iris.Addr(":8091"))
+	app.Run(iris.Addr(":8090"))
 
 	return
 }
