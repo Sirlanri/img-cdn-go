@@ -69,6 +69,6 @@ func getinfo() {
 
 }
 
-func main() {
+func main2() {
 	getinfo()
 }

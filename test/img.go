@@ -14,7 +14,7 @@ func Createid() string {
 	return id
 }
 
-func main2() {
+func main() {
 	for i := 0; i < 20; i++ {
 		fmt.Println(Createid())
 

@@ -3,26 +3,21 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"io/ioutil"
 
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 	"github.com/kataras/iris/v12"
 )
 
-/*ImgUploadOSS 上传单张图片到OSS
-上传form的key为 "img"
-*/
-func ImgUploadOSS(con iris.Context) {
-	//最大上传图片限制为20M
-	con.SetMaxRequestBodySize(20 * iris.MB)
-	imgfile, header, err := con.FormFile("img")
-	if err != nil {
-		fmt.Println("图片上传失败！", err.Error())
-		con.StatusCode(201)
-		return
-	}
-	filename := GetFileName(header.Filename)
+var (
+	bucket *oss.Bucket
+)
+
+func init() {
+	ossInit()
+}
+
+func ossInit() {
 	//读取保密key内容
 	data, err := ioutil.ReadFile("./configs/secret.json")
 	if err != nil {
@@ -47,17 +42,58 @@ func ImgUploadOSS(con iris.Context) {
 		fmt.Println("连接oss失败！")
 		return
 	}
-	bucket, err := ossClient.Bucket(bucketName)
+	bucket, err = ossClient.Bucket(bucketName)
 	if err != nil {
 		fmt.Println("oss-连接bucket失败", err.Error())
 		return
 	}
-	myfile := io.MultiReader(imgfile)
-	err = bucket.PutObject("img/"+filename, myfile)
+}
+
+/*ImgUploadOSS 上传单张图片到OSS
+上传form的key为 "img"
+*/
+func ImgUploadOSS(con iris.Context) {
+	//最大上传图片限制为20M
+	con.SetMaxRequestBodySize(20 * iris.MB)
+	imgfile, header, err := con.FormFile("img")
+	if err != nil {
+		fmt.Println("图片上传失败！", err.Error())
+		con.StatusCode(201)
+		return
+	}
+	filename := GetFileName(header.Filename)
+
+	err = bucket.PutObject("img/"+filename, imgfile)
 	if err != nil {
 		fmt.Println("上传文件至oss失败", err.Error())
 		return
 	}
 	headurl := "https://cdn.ri-co.cn/img/"
 	con.WriteString(headurl + filename)
+}
+
+/*DelImgOSS 删除OSS的图片
+有安全问题，暂停使用此API
+*/
+func DelImgOSS(con iris.Context) {
+	picurl := con.URLParamDefault("addr", "")
+	if picurl == "" {
+		con.StatusCode(201)
+		con.WriteString("删除地址不存在")
+		return
+	}
+	//剔除url前缀，得到bucket内的路径
+	realuri := picurl[21:]
+	fmt.Println(realuri)
+
+	//删除图片
+	err := bucket.DeleteObject(realuri)
+	if err != nil {
+		fmt.Println("OSS-删除失败", err.Error())
+		con.StatusCode(202)
+		con.WriteString("oss删除失败")
+		return
+	}
+	con.WriteString("删除成功")
+
 }

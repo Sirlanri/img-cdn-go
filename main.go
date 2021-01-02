@@ -23,6 +23,7 @@ func main() {
 	img := app.Party("/img")
 
 	img.Post("/upload", handlers.ImgUploadOSS)
+	img.Get("/del", handlers.DelImgOSS)
 
 	app.Run(iris.Addr(":8090"))
 
