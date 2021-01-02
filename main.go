@@ -9,10 +9,9 @@ import (
 )
 
 func main() {
+	app := iris.New()
 	//初始化文件夹
 	serves.DirInit()
-
-	app := iris.New()
 	app.OnErrorCode(iris.StatusNotFound, handlers.NotFound)
 	crs := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"}, //允许通过的主机名称

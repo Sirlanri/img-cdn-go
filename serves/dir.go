@@ -1,6 +1,7 @@
 package serves
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -34,11 +35,11 @@ func DirInit() {
 		if !flag {
 			err := os.Mkdir(dir, os.ModeDir)
 			if err != nil {
-				log.Fatalln("创建目录失败", err.Error())
+				fmt.Println("创建目录失败", err.Error())
 			} else {
-				log.Fatalln(dir, "文件夹不存在，创建成功")
+				fmt.Println(dir, "文件夹不存在，创建成功")
 			}
 		}
 	}
-
+	return
 }
