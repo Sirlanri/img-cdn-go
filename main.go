@@ -16,7 +16,8 @@ func main() {
 	app.OnErrorCode(iris.StatusNotFound, handlers.NotFound)
 	crs := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"}, //允许通过的主机名称
-		AllowCredentials: true,
+		AllowedHeaders:   []string{"accept", "content-type", "authorization"},
+		AllowCredentials: false,
 		Debug:            true,
 	})
 	app.WrapRouter(crs.ServeHTTP)
@@ -24,7 +25,7 @@ func main() {
 
 	cdn.Post("/imgupload", handlers.ImgUpload)
 
-	app.Run(iris.Addr(":8091"))
+	app.Run(iris.Addr(":8090"))
 
 	return
 }
