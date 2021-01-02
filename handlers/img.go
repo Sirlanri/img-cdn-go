@@ -55,5 +55,6 @@ type info struct {
 	Bucketname string `json:"bucketname"`
 }
 type jsonfile struct {
-	Ossinfo info `json:"ossinfo"`
+	Ossinfo info   `json:"ossinfo"`
+	Access  string `json:"access"`
 }
