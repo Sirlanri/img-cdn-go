@@ -2,7 +2,6 @@ package main
 
 import (
 	"imgcdn/handlers"
-	"imgcdn/serves"
 
 	"github.com/kataras/iris/v12"
 	"github.com/rs/cors"
@@ -10,8 +9,6 @@ import (
 
 func main() {
 	app := iris.New()
-	//初始化文件夹
-	serves.DirInit()
 	app.OnErrorCode(iris.StatusNotFound, handlers.NotFound)
 	crs := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"}, //允许通过的主机名称

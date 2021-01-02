@@ -20,7 +20,7 @@ func init() {
 
 func ossInit() {
 	//读取保密key内容
-	data, err := ioutil.ReadFile("./configs/secret.json")
+	data, err := ioutil.ReadFile("./secret.json")
 	if err != nil {
 		fmt.Println("读取json文件出错", err.Error())
 		return
