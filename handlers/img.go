@@ -80,12 +80,13 @@ func ImgUploadOSS(con iris.Context) {
 		return
 	}
 	myfile := io.MultiReader(imgfile)
-	err = bucket.PutObject("imgtest/"+filename, myfile)
+	err = bucket.PutObject("img/"+filename, myfile)
 	if err != nil {
 		fmt.Println("上传文件至oss失败", err.Error())
 		return
 	}
-
+	headurl := "https://cdn.ri-co.cn/img/"
+	con.WriteString(headurl + filename)
 }
 
 /*GetFileName 为上传文件设置唯一文件名
