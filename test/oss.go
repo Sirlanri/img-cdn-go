@@ -63,8 +63,10 @@ func getinfo() {
 		} else {
 			break
 		}
-
 	}
+
+	//上传文件
+
 }
 
 func main() {
