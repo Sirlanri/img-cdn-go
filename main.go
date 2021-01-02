@@ -22,7 +22,7 @@ func main() {
 	app.WrapRouter(crs.ServeHTTP)
 	img := app.Party("/img")
 
-	img.Post("/upload", handlers.ImgUpload)
+	img.Post("/upload", handlers.ImgUploadOSS)
 
 	app.Run(iris.Addr(":8090"))
 
