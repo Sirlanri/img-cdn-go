@@ -20,9 +20,9 @@ func main() {
 		Debug:            true,
 	})
 	app.WrapRouter(crs.ServeHTTP)
-	cdn := app.Party("/cdn")
+	img := app.Party("/img")
 
-	cdn.Post("/imgupload", handlers.ImgUpload)
+	img.Post("/upload", handlers.ImgUpload)
 
 	app.Run(iris.Addr(":8090"))
 
