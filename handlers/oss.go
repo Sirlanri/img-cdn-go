@@ -81,6 +81,7 @@ func ImgUploadOSS(con iris.Context) {
 		fmt.Println("上传文件至oss失败", err.Error())
 		return
 	}
+
 	headurl := "https://cdn.ri-co.cn/img/"
 	con.WriteString(headurl + filename)
 }
