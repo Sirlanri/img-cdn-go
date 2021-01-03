@@ -8,6 +8,7 @@ import (
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 )
 
+/*
 type info struct {
 	Endpoint   string `json:"endpoint"`
 	Accessid   string `json:"accessid"`
@@ -17,7 +18,7 @@ type info struct {
 type jsonfile struct {
 	Ossinfo info `json:"ossinfo"`
 }
-
+*/
 func getinfo() {
 	data, err := ioutil.ReadFile("../configs/secret.json")
 	if err != nil {
