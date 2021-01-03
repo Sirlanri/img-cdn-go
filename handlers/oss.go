@@ -12,6 +12,7 @@ import (
 var (
 	bucket    *oss.Bucket
 	accessKey string
+	varify    = false
 )
 
 func init() {
@@ -56,14 +57,15 @@ func ossInit() {
 func ImgUploadOSS(con iris.Context) {
 	//最大上传图片限制为20M
 	con.SetMaxRequestBodySize(20 * iris.MB)
-
-	//权限认证
-	power := con.URLParamDefault("access", "")
-	if power != accessKey {
-		fmt.Println("无上传权限的请求，已拒绝")
-		con.StatusCode(201)
-		con.WriteString("你没权限哒~ 别折腾了，小可爱")
-		return
+	if varify {
+		//权限认证
+		power := con.URLParamDefault("access", "")
+		if power != accessKey {
+			fmt.Println("无上传权限的请求，已拒绝")
+			con.StatusCode(201)
+			con.WriteString("你没权限哒~ 别折腾了，小可爱")
+			return
+		}
 	}
 
 	imgfile, header, err := con.FormFile("img")
@@ -95,12 +97,14 @@ func DelImgOSS(con iris.Context) {
 	}
 
 	//权限认证
-	power := con.URLParamDefault("access", "")
-	if power == "" || power != accessKey {
-		fmt.Println("无删除权限的请求，已拒绝")
-		con.StatusCode(201)
-		con.WriteString("你没权限哒~ 别折腾了，小可爱")
-		return
+	if varify {
+		power := con.URLParamDefault("access", "")
+		if power == "" || power != accessKey {
+			fmt.Println("无删除权限的请求，已拒绝")
+			con.StatusCode(201)
+			con.WriteString("你没权限哒~ 别折腾了，小可爱")
+			return
+		}
 	}
 
 	//剔除url前缀，得到bucket内的路径

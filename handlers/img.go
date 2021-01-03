@@ -46,6 +46,10 @@ func GetFileName(source string) string {
 	return uuid + source
 }
 
+func Test(con iris.Context) {
+	con.WriteString("访问成功")
+}
+
 //结构图区域
 
 type info struct {
