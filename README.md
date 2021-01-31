@@ -14,11 +14,9 @@
 ## API
 
 **上传图片**
-`https://upload.ri-co.cn/img/upload`
 
-**返回值** 图片的完整URL，例如：
 
-`https://cdn.ri-co.cn/img/754e0dc8-13a9-4aac-b0cf-0b8015085fc5rpionfish-Overwatch-Hentai.jpg`
+**返回值** 图片的完整URL
 
 ![实例图片](https://cdn.ri-co.cn/img/754e0dc8-13a9-4aac-b0cf-0b8015085fc5rpionfish-Overwatch-Hentai.jpg?x-oss-process=style/middle_cut)
 
